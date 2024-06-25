@@ -51,7 +51,7 @@ class Server:
             if self.__indexed_dataset.get(j) is not None:
                 choice = j
 
-        for i in range(j, j + page_size):
+        for i in range(choice, choice + page_size):
             r = self.__indexed_dataset.get(i)
             if r is None:
                 ret_dict["next_index"] = None
