@@ -56,6 +56,6 @@ class Server:
             if r is None:
                 ret_dict["next_index"] = None
                 break
-            data_append(r)
+            data.append(r)
         ret_dict["data"] = data
         return (ret_dict)
