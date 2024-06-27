@@ -26,7 +26,6 @@ class BaseCaching():
 class BasicCache(BaseCaching):
     """BasicCache inherits"""
 
-
     def put(self, key, item):
         """ Add an item in the cache
         """
