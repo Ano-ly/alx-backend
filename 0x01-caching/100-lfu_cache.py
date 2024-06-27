@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-""" LRUCaching module
+""" LFUCaching module
 """
 import time
 BaseCaching = __import__("base_caching").BaseCaching
 
 
-class LRUCache(BaseCaching):
-    """Class FIFOCache inherits from BaseCaching"""
+class LFUCache(BaseCaching):
+    """Class LFUCache inherits from BaseCaching"""
 
     def __init__(self):
         """Initialise class instance"""
@@ -22,19 +22,19 @@ class LRUCache(BaseCaching):
             self.timer.update({key: time.time()})
             self.usage.update({key: 0})
             if self.MAX_ITEMS < len(self.cache_data):
-                least_freq = min(self.usage.values())
+                least_freq = min([v for k, v in self.usage.items() if k != key])
                 evict_list = [k for k in self.cache_data.keys()
                               if self.usage[k] == least_freq]
                 min_time = min([self.timer[k] for k in evict_list])
                 for k in self.cache_data:
                     if self.timer[k] == min_time:
                         evict_key = k
-                print(self.timer)
-                print(self.usage)
                 del (self.cache_data[evict_key])
                 print(f"DISCARD: {evict_key}")
                 del (self.usage[evict_key])
                 del (self.timer[evict_key])
+        print(self.usage)
+        print(self.timer)
 
     def get(self, key):
         """ Get an item by key
@@ -43,5 +43,7 @@ class LRUCache(BaseCaching):
             ret = self.cache_data.get(key)
             if ret is not None:
                 self.usage[key] += 1
+                self.timer[key] = time.time()
             return ret
         return (None)
+
