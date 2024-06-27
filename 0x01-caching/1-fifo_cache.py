@@ -27,6 +27,7 @@ class FIFOCache(BaseCaching):
                     if self.timer[k] == evicted:
                         to_evict = k
                 del (self.cache_data[to_evict])
+                del (self.timer[to_evict])
                 print(f"DISCARD: {to_evict}")
 
     def get(self, key):
