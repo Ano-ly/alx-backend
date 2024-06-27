@@ -17,7 +17,9 @@ class FIFOCache(BaseCaching):
         """ Add an item in the cache
         """
         if key is not None and item is not None:
-            if self.MAX_ITEMS == len(self.cache_data):
+            self.timer.update({key: time.time()})
+            self.cache_data.update({key: item})
+            if self.MAX_ITEMS < len(self.cache_data):
                 comp_list = [v for k, v in self.timer.items() if k in
                              self.cache_data.keys()]
                 evicted = min(comp_list)
@@ -26,8 +28,6 @@ class FIFOCache(BaseCaching):
                         to_evict = k
                 del (self.cache_data[to_evict])
                 print(f"DISCARD: {to_evict}")
-            self.timer.update({key: time.time()})
-            self.cache_data.update({key: item})
 
     def get(self, key):
         """ Get an item by key
