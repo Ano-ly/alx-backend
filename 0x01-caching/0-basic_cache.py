@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" BaseCaching module
+""" BaseCaching module for caching
 """
 
 
@@ -11,12 +11,12 @@ class BaseCaching():
     MAX_ITEMS = 4
 
     def __init__(self):
-        """ Initiliaze
+        """ Initiliaze base caching instance
         """
         self.cache_data = {}
 
     def print_cache(self):
-        """ Print the cache
+        """ Print the cache to screen
         """
         print("Current cache:")
         for key in sorted(self.cache_data.keys()):
@@ -34,7 +34,7 @@ class BaseCaching():
 
 
 class BasicCache(BaseCaching):
-    """BasicCache inherits"""
+    """BasicCache inherits from basecaching"""
 
     def put(self, key, item):
         """ Add an item in the cache
