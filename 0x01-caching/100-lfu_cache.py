@@ -22,7 +22,8 @@ class LFUCache(BaseCaching):
             self.timer.update({key: time.time()})
             self.usage.update({key: 0})
             if self.MAX_ITEMS < len(self.cache_data):
-                least_freq = min([v for k, v in self.usage.items() if k != key])
+                least_freq = min([v for k, v in self.usage.items()
+                                 if k != key])
                 evict_list = [k for k in self.cache_data.keys()
                               if self.usage[k] == least_freq]
                 min_time = min([self.timer[k] for k in evict_list])
@@ -46,4 +47,3 @@ class LFUCache(BaseCaching):
                 self.timer[key] = time.time()
             return ret
         return (None)
-
