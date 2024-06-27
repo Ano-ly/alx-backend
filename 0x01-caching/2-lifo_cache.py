@@ -5,7 +5,7 @@ import time
 BaseCaching = __import__("base_caching").BaseCaching
 
 
-class FIFOCache(BaseCaching):
+class LIFOCache(BaseCaching):
     """Class FIFOCache inherits from BaseCaching"""
 
     def __init__(self):
@@ -21,7 +21,7 @@ class FIFOCache(BaseCaching):
             self.cache_data.update({key: item})
             if self.MAX_ITEMS < len(self.cache_data):
                 comp_list = [v for k, v in self.timer.items() if k in
-                             self.cache_data.keys()]
+                             self.cache_data.keys() and k != key]
                 evicted = max(comp_list)
                 for k in self.cache_data.keys():
                     if self.timer[k] == evicted:
