@@ -19,7 +19,6 @@ class LFUCache(BaseCaching):
         """
         if key is not None and item is not None:
             if key in self.cache_data.keys():
-                print("INNNNN")
                 self.usage[key] += 1
             else:
                 self.usage.update({key: 0})
@@ -38,8 +37,6 @@ class LFUCache(BaseCaching):
                 print(f"DISCARD: {evict_key}")
                 del (self.usage[evict_key])
                 del (self.timer[evict_key])
-        print(self.usage)
-        print(self.timer)
 
     def get(self, key):
         """ Get an item by key
