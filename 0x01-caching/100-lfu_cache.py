@@ -18,9 +18,13 @@ class LFUCache(BaseCaching):
         """ Add an item in the cache
         """
         if key is not None and item is not None:
+            if key in self.cache_data.keys():
+                print("INNNNN")
+                self.usage[key] += 1
+            else:
+                self.usage.update({key: 0})
             self.cache_data.update({key: item})
             self.timer.update({key: time.time()})
-            self.usage.update({key: 0})
             if self.MAX_ITEMS < len(self.cache_data):
                 least_freq = min([v for k, v in self.usage.items()
                                  if k != key])
