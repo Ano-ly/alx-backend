@@ -23,7 +23,7 @@ babel = Babel(app)
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """Get_locale function"""
     req_lang = request.args.get("locale")
     if req_lang in app.config['LANGUAGES']:
@@ -32,7 +32,7 @@ def get_locale():
         return (request.accept_languages.best_match(app.config['LANGUAGES']))
 
 
-def get_user():
+def get_user() -> str:
     """Get user dictionary"""
     user = request.args.get("login_as")
     if user is None:
@@ -47,7 +47,7 @@ def get_user():
 
 
 @app.before_request
-def before_request():
+def before_request() -> str:
     user = get_user()
     if user is not None:
         g.user = user
