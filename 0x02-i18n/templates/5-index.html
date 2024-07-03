@@ -3,6 +3,11 @@
     <head>
         <title>{{ _('home_title') }}</title>
     </head>
-    {}
-    <p>{{ _('logged_in_as'}}</p>
+    <body>
+        {% if username is not none %}
+        <p>{{ _('logged_in_as', username=username) }}</p>
+        {% else %}
+        <p>{{ _('not_logged_in') }}</p>
+        {% endif %}
+    </body>
 </html>

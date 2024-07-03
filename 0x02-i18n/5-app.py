@@ -9,6 +9,8 @@ users = {
     3: {"name": "Spock", "locale": "kg", "timezone": "Vulcan"},
     4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
 }
+
+
 class Config:
     """Class config for babel"""
     LANGUAGES = ["en", "fr"]
@@ -30,21 +32,22 @@ def get_locale():
 
 def get_user():
     """Get user dictionary"""
-    list_users = [user_dict["name"] for user_dict in users.values()]
     user = request.args.get('login_as')
-    if user is None or user not in list_users:
+    if user is None or user not in users.keys():
         return (None)
     else:
-        for item in users.values():
-            if item["name"] == user:
-                return (item)
+        user = int(user)
+        for item in users.keys():
+            if item == user:
+                return (users[item]["name"])
 
 
 @app.before_request
 def before_request():
     user = get_user()
-    if user is not None:
-        g.user = user
+    g.user = user
+
+
 app.config.from_object(Config)
 app.config['BABEL_DEFAULT_LOCALE'] = 'en'
 app.config['BABEL_DEFAULT_TIMEZONE'] = 'UTC'
@@ -53,7 +56,7 @@ app.config['BABEL_DEFAULT_TIMEZONE'] = 'UTC'
 @app.route("/", strict_slashes=False)
 def home_page():
     """Render template"""
-    return (render_template('3-index.html'))
+    return (render_template('5-index.html', username=g.user))
 
 
 if __name__ == "__main__":

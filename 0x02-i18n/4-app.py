@@ -31,7 +31,7 @@ app.config['BABEL_DEFAULT_TIMEZONE'] = 'UTC'
 @app.route("/", strict_slashes=False)
 def home_page():
     """Render template"""
-    return (render_template('3-index.html'))
+    return (render_template('4-index.html'))
 
 
 if __name__ == "__main__":
