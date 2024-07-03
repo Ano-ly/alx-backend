@@ -32,11 +32,13 @@ def get_locale():
 
 def get_user():
     """Get user dictionary"""
-    user = request.args.get('login_as')
-    if user is None or user not in users.keys():
+    user = request.args.get("login_as")
+    if user is None:
         return (None)
     else:
         user = int(user)
+        if user not in users.keys():
+            return (None)
         for item in users.keys():
             if item == user:
                 return (users[item]["name"])
@@ -45,7 +47,8 @@ def get_user():
 @app.before_request
 def before_request():
     user = get_user()
-    g.user = user
+    if user is not None:
+        g.user = user
 
 
 app.config.from_object(Config)

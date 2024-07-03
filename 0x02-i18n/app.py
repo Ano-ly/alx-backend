@@ -2,6 +2,8 @@
 """Basic Flask app"""
 from flask import Flask, render_template, request, g
 from flask_babel import Babel, _
+from pytz import timezone
+from pytz.exceptions import UnknownTimeZoneError
 
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
@@ -55,6 +57,38 @@ def get_user():
         for item in users.keys():
             if item == user:
                 return (users[item]["name"])
+
+
+@babel.timezoneselector
+def get_timezone():
+    if request.args.get("timezone") is not None:
+        tz = request.args.get("timezone")
+        try:
+            tz = timezone(tz)
+            return (tz)
+        except UnknownTimeZoneError:
+            if request.args.get("login_as") is not None:
+                user_no = request.args.get("login_as")
+                user_dict = users.get(int(user_no))
+                tz = user_dict.get("timezone")
+                try:
+                    tz = timezone(tz)
+                    return (tz)
+                except UnknownTimeZoneError:
+                    pass
+            else:
+               pass
+    elif request.args.get("login_as") is not None:
+        user_no = request.args.get("login_as")
+        user_dict = users.get(int(user_no))
+        tz = user_dict.get("timezone")
+        try:
+            tz = timezone(tz)
+            return (tz)
+        except UnknownTimeZoneError:
+            pass
+
+
 
 
 @app.before_request
