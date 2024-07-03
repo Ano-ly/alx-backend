@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, g
 from flask_babel import Babel, _
 from pytz import timezone
 from pytz.exceptions import UnknownTimeZoneError
+from datetime import datetime
 
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
@@ -105,6 +106,7 @@ app.config['BABEL_DEFAULT_TIMEZONE'] = 'UTC'
 @app.route("/", strict_slashes=False)
 def home_page():
     """Render template"""
+    time = datetime.now
     return (render_template('5-index.html', username=g.user))
 
 
